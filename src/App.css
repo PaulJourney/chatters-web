@@ -2,134 +2,128 @@
   background-color: #1e1e1e;
   color: white;
   min-height: 100vh;
-  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
 .header {
-  margin-bottom: 30px;
-  border-bottom: 1px solid #444;
-  padding-bottom: 15px;
+  padding: 20px 0;
+  border-bottom: 1px solid #333;
 }
 
-.header h1 {
-  color: #61dafb;
+.logo h1 {
+  color: #3498db;
+  font-size: 2.5rem;
+  margin: 0;
+  padding: 10px 0;
 }
 
-.sidebar {
-  margin-bottom: 20px;
-}
-
-.card {
-  background-color: #2d2d2d;
-  border: 1px solid #444;
-  margin-bottom: 20px;
-}
-
-.card-header {
-  background-color: #3d3d3d;
-  color: #61dafb;
-  font-weight: bold;
-}
-
-.list-group-item {
-  background-color: #2d2d2d;
-  color: white;
-  border-color: #444;
-}
-
-.list-group-item.active {
-  background-color: #0d6efd;
-  border-color: #0d6efd;
-}
-
-.url-item {
-  margin-bottom: 10px;
+.language-selector {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
 
-.url-button {
-  margin-right: 10px;
-  min-width: 60px;
-}
-
-.url-text {
-  word-break: break-all;
-}
-
-.chat-messages {
-  height: 300px;
-  overflow-y: auto;
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #252525;
-  border-radius: 5px;
-}
-
-.message {
-  margin-bottom: 15px;
-  display: flex;
-}
-
-.message.user {
-  justify-content: flex-end;
-}
-
-.message-bubble {
-  max-width: 80%;
-  padding: 10px 15px;
-  border-radius: 18px;
-  word-wrap: break-word;
-}
-
-.message.user .message-bubble {
-  background-color: #0d6efd;
-  color: white;
-}
-
-.message.bot .message-bubble {
-  background-color: #3d3d3d;
-  color: white;
-}
-
-.message-form {
-  display: flex;
-}
-
-.message-form input {
-  flex-grow: 1;
-  margin-right: 10px;
+.lang-button {
+  margin-left: 5px;
   background-color: #333;
-  border-color: #444;
-  color: white;
+  border: none;
+  color: #fff;
 }
 
-.message-form input::placeholder {
-  color: #aaa;
+.lang-button:hover, .lang-button:focus {
+  background-color: #444;
 }
 
-.message-form button {
-  min-width: 80px;
+.lang-button.btn-primary {
+  background-color: #3498db;
 }
 
-.no-messages {
+.welcome-section {
+  padding: 40px 0;
   text-align: center;
-  color: #888;
-  padding: 20px;
 }
 
-.select-bot-prompt {
-  text-align: center;
-  padding: 50px;
+.welcome-section h2 {
+  color: #3498db;
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.main-options {
+  padding: 20px 0 60px;
+}
+
+.option-col {
+  padding: 15px;
+}
+
+.option-card {
   background-color: #2d2d2d;
-  border-radius: 10px;
-  color: #aaa;
+  border: none;
+  border-radius: 8px;
+  padding: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.notification {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  min-width: 300px;
+.icon-container {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.option-icon {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.option-card h3 {
+  color: #3498db;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.option-card p {
+  color: #ccc;
+  margin-bottom: 25px;
+}
+
+.action-button {
+  background-color: #3498db;
+  border: none;
+  padding: 8px 20px;
+  font-size: 1rem;
+  margin-top: auto;
+}
+
+.action-button:hover, .action-button:focus {
+  background-color: #2980b9;
+}
+
+.footer {
+  border-top: 1px solid #333;
+  padding: 20px 0;
+  color: #777;
+}
+
+@media (max-width: 768px) {
+  .language-selector {
+    justify-content: center;
+    margin-top: 15px;
+  }
+  
+  .logo h1 {
+    text-align: center;
+  }
 }

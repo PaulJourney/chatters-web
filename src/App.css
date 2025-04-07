@@ -11,7 +11,7 @@
 }
 
 .logo h1 {
-  color: #e74c3c;
+  color: #3498db;
   font-size: 2.5rem;
   margin: 0;
   padding: 10px 0;
@@ -35,7 +35,7 @@
 }
 
 .lang-button.btn-primary {
-  background-color: #e74c3c;
+  background-color: #3498db;
 }
 
 .welcome-section {
@@ -44,7 +44,7 @@
 }
 
 .welcome-section h2 {
-  color: #e74c3c;
+  color: #3498db;
   font-size: 2.5rem;
   margin-bottom: 15px;
 }
@@ -89,7 +89,7 @@
 }
 
 .option-card h3 {
-  color: #e74c3c;
+  color: #3498db;
   margin-bottom: 15px;
   font-size: 1.8rem;
 }
@@ -100,7 +100,7 @@
 }
 
 .action-button {
-  background-color: #e74c3c;
+  background-color: #3498db;
   border: none;
   padding: 8px 20px;
   font-size: 1rem;
@@ -108,7 +108,7 @@
 }
 
 .action-button:hover, .action-button:focus {
-  background-color: #c0392b;
+  background-color: #2980b9;
 }
 
 .footer {
@@ -126,7 +126,7 @@
 }
 
 .sidebar-section h3 {
-  color: #e74c3c;
+  color: #3498db;
   margin-bottom: 15px;
   font-size: 1.5rem;
 }
@@ -154,7 +154,7 @@
 }
 
 .list-group-item:hover {
-  background-color: #e74c3c;
+  background-color: #3498db;
   color: #fff;
 }
 

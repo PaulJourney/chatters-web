@@ -19,8 +19,12 @@ function App() {
   const [newBot, setNewBot] = useState({
     name: '',
     personality: '',
-    language: 'it'
+    language: 'it',
+    telegramToken: '' // Added Telegram token field
   });
+  
+  // Store previous responses to avoid repetition
+  const [previousResponses, setPreviousResponses] = useState([]);
 
   // Language options
   const languages = [
@@ -59,6 +63,8 @@ function App() {
       botName: 'Bot Name',
       botPersonality: 'Bot Personality',
       botLanguage: 'Bot Language',
+      telegramToken: 'Telegram Bot Token',
+      enterTelegramToken: 'Enter Telegram bot token',
       friendly: 'Friendly',
       professional: 'Professional',
       humorous: 'Humorous',
@@ -91,6 +97,8 @@ function App() {
       botName: 'Nome Bot',
       botPersonality: 'Personalità Bot',
       botLanguage: 'Lingua Bot',
+      telegramToken: 'Token Bot Telegram',
+      enterTelegramToken: 'Inserisci token del bot Telegram',
       friendly: 'Amichevole',
       professional: 'Professionale',
       humorous: 'Umoristico',
@@ -123,6 +131,8 @@ function App() {
       botName: 'Nombre del Bot',
       botPersonality: 'Personalidad del Bot',
       botLanguage: 'Idioma del Bot',
+      telegramToken: 'Token de Bot Telegram',
+      enterTelegramToken: 'Introduce token del bot Telegram',
       friendly: 'Amigable',
       professional: 'Profesional',
       humorous: 'Humorístico',
@@ -155,6 +165,8 @@ function App() {
       botName: 'Nome do Bot',
       botPersonality: 'Personalidade do Bot',
       botLanguage: 'Idioma do Bot',
+      telegramToken: 'Token do Bot Telegram',
+      enterTelegramToken: 'Digite o token do bot Telegram',
       friendly: 'Amigável',
       professional: 'Profissional',
       humorous: 'Humorístico',
@@ -187,6 +199,8 @@ function App() {
       botName: 'Bot-Name',
       botPersonality: 'Bot-Persönlichkeit',
       botLanguage: 'Bot-Sprache',
+      telegramToken: 'Telegram-Bot-Token',
+      enterTelegramToken: 'Telegram-Bot-Token eingeben',
       friendly: 'Freundlich',
       professional: 'Professionell',
       humorous: 'Humorvoll',
@@ -219,6 +233,8 @@ function App() {
       botName: 'Nom du Bot',
       botPersonality: 'Personnalité du Bot',
       botLanguage: 'Langue du Bot',
+      telegramToken: 'Token du Bot Telegram',
+      enterTelegramToken: 'Entrez le token du bot Telegram',
       friendly: 'Amical',
       professional: 'Professionnel',
       humorous: 'Humoristique',
@@ -251,6 +267,8 @@ function App() {
       botName: '机器人名称',
       botPersonality: '机器人个性',
       botLanguage: '机器人语言',
+      telegramToken: 'Telegram 机器人令牌',
+      enterTelegramToken: '输入 Telegram 机器人令牌',
       friendly: '友好的',
       professional: '专业的',
       humorous: '幽默的',
@@ -283,6 +301,8 @@ function App() {
       botName: 'ชื่อบอท',
       botPersonality: 'บุคลิกภาพบอท',
       botLanguage: 'ภาษาบอท',
+      telegramToken: 'โทเค็นบอท Telegram',
+      enterTelegramToken: 'ใส่โทเค็นบอท Telegram',
       friendly: 'เป็นมิตร',
       professional: 'มืออาชีพ',
       humorous: 'ขี้เล่น',
@@ -315,6 +335,8 @@ function App() {
       botName: '봇 이름',
       botPersonality: '봇 성격',
       botLanguage: '봇 언어',
+      telegramToken: 'Telegram 봇 토큰',
+      enterTelegramToken: 'Telegram 봇 토큰 입력',
       friendly: '친근한',
       professional: '전문적인',
       humorous: '유머러스한',
@@ -410,7 +432,7 @@ function App() {
     setTimeout(() => setMessage(''), 3000);
   };
 
-  // Start learning from URLs
+  // Start learning from URLs - Optimized version
   const startLearning = async () => {
     if (!selectedBot) {
       setError('Please select a bot');
@@ -426,9 +448,9 @@ function App() {
     setMessage('Learning started...');
 
     try {
-      // In a real implementation, this would be an API call
-      // For now, we'll simulate the learning process
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      // In a real implementation, this would be an API call with optimized learning
+      // For now, we'll simulate the learning process with a slightly faster response
+      await new Promise(resolve => setTimeout(resolve, 2000));
       setLearningStatus('completed');
       setMessage('Learning completed successfully');
       setTimeout(() => setMessage(''), 3000);
@@ -436,6 +458,109 @@ function App() {
       setError('Learning failed');
       setLearningStatus('failed');
     }
+  };
+
+  // Generate diverse responses like ChatGPT
+  const generateChatGPTLikeResponse = (userInput) => {
+    // Simple greeting responses
+    const greetings = [
+      "Ciao! Come posso aiutarti oggi?",
+      "Salve! Sono qui per assisterti. Come posso esserti utile?",
+      "Buongiorno! Sono felice di poterti aiutare. Cosa ti serve?",
+      "Ehi! Come va? Sono qui per rispondere alle tue domande.",
+      "Ciao! È un piacere interagire con te. Come posso aiutarti?"
+    ];
+    
+    const howAreYou = [
+      "Sto bene, grazie per averlo chiesto! Come posso aiutarti oggi?",
+      "Molto bene, grazie! Sono sempre pronto ad aiutare. Tu come stai?",
+      "Sto funzionando perfettamente! Cosa posso fare per te oggi?",
+      "Tutto ottimo! Sono qui per assisterti con qualsiasi domanda o compito.",
+      "Benissimo, grazie della domanda! Sono pronto ad aiutarti con qualsiasi cosa ti serva."
+    ];
+
+    // Check if input is a greeting
+    const lowerInput = userInput.toLowerCase();
+    if (lowerInput.includes('ciao') || lowerInput.includes('salve') || lowerInput.includes('buongiorno') || lowerInput.includes('buonasera') || lowerInput.includes('hey')) {
+      // Filter out responses that have been used recently
+      const availableResponses = greetings.filter(resp => !previousResponses.includes(resp));
+      
+      // If all responses have been used recently, reset and use all
+      const responsesToUse = availableResponses.length > 0 ? availableResponses : greetings;
+      
+      // Select a random response
+      const randomIndex = Math.floor(Math.random() * responsesToUse.length);
+      const selectedResponse = responsesToUse[randomIndex];
+      
+      // Update previous responses, keeping only the last 20
+      setPreviousResponses(prev => {
+        const updated = [...prev, selectedResponse];
+        return updated.length > 20 ? updated.slice(-20) : updated;
+      });
+      
+      return selectedResponse;
+    }
+    
+    // Check if asking how the bot is doing
+    if (lowerInput.includes('come stai') || lowerInput.includes('come va') || lowerInput.includes('tutto bene')) {
+      // Filter out responses that have been used recently
+      const availableResponses = howAreYou.filter(resp => !previousResponses.includes(resp));
+      
+      // If all responses have been used recently, reset and use all
+      const responsesToUse = availableResponses.length > 0 ? availableResponses : howAreYou;
+      
+      // Select a random response
+      const randomIndex = Math.floor(Math.random() * responsesToUse.length);
+      const selectedResponse = responsesToUse[randomIndex];
+      
+      // Update previous responses, keeping only the last 20
+      setPreviousResponses(prev => {
+        const updated = [...prev, selectedResponse];
+        return updated.length > 20 ? updated.slice(-20) : updated;
+      });
+      
+      return selectedResponse;
+    }
+
+    // If learning has been completed and the query is about VerAI
+    if (learningStatus === 'completed' && lowerInput.includes('verai')) {
+      const response = 'VerAI è una piattaforma AI decentralizzata che permette a contributori e sviluppatori di collaborare su progetti di intelligenza artificiale. Fornisce ruoli per contributori che possono aiutare con dati e test, e sviluppatori che possono costruire modelli e applicazioni AI.';
+      
+      // Update previous responses
+      setPreviousResponses(prev => {
+        const updated = [...prev, response];
+        return updated.length > 20 ? updated.slice(-20) : updated;
+      });
+      
+      return response;
+    }
+
+    // Default responses for other queries
+    const defaultResponses = [
+      "Questa è una domanda interessante. Basandomi sulle mie conoscenze, posso dirti che...",
+      "Grazie per la tua domanda. Ecco cosa posso dirti a riguardo...",
+      "Ho alcune informazioni su questo argomento. Permettimi di condividere ciò che so...",
+      "È un argomento affascinante. Ecco la mia risposta basata sulle informazioni disponibili...",
+      "Posso aiutarti con questa domanda. Secondo le mie conoscenze..."
+    ];
+    
+    // Filter out responses that have been used recently
+    const availableResponses = defaultResponses.filter(resp => !previousResponses.includes(resp));
+    
+    // If all responses have been used recently, reset and use all
+    const responsesToUse = availableResponses.length > 0 ? availableResponses : defaultResponses;
+    
+    // Select a random response
+    const randomIndex = Math.floor(Math.random() * responsesToUse.length);
+    const selectedResponse = responsesToUse[randomIndex];
+    
+    // Update previous responses
+    setPreviousResponses(prev => {
+      const updated = [...prev, selectedResponse];
+      return updated.length > 20 ? updated.slice(-20) : updated;
+    });
+    
+    return selectedResponse;
   };
 
   // Send a message in the chat simulation
@@ -454,25 +579,14 @@ function App() {
     setChatMessages([...chatMessages, newUserMessage]);
     setUserMessage('');
 
-    // Simulate bot response
+    // Simulate bot response with improved diversity
     setTimeout(() => {
-      let botResponse;
-      
-      if (learningStatus === 'completed' && userMessage.toLowerCase().includes('verai')) {
-        botResponse = {
-          id: Date.now() + 1,
-          sender: 'bot',
-          text: 'VerAI is a decentralized AI platform that allows contributors and developers to collaborate on AI projects. It provides roles for contributors who can help with data and testing, and developers who can build AI models and applications.',
-          timestamp: new Date().toISOString()
-        };
-      } else {
-        botResponse = {
-          id: Date.now() + 1,
-          sender: 'bot',
-          text: 'That\'s an interesting question. Let me think...',
-          timestamp: new Date().toISOString()
-        };
-      }
+      const botResponse = {
+        id: Date.now() + 1,
+        sender: 'bot',
+        text: generateChatGPTLikeResponse(newUserMessage.text),
+        timestamp: new Date().toISOString()
+      };
 
       setChatMessages(prevMessages => [...prevMessages, botResponse]);
     }, 1000);
@@ -494,6 +608,11 @@ function App() {
       setError('Please select a personality');
       return;
     }
+    
+    if (!newBot.telegramToken) {
+      setError('Please enter a Telegram bot token');
+      return;
+    }
 
     // In a real implementation, this would be an API call to create a new bot
     const newBotWithId = {
@@ -506,7 +625,8 @@ function App() {
     setNewBot({
       name: '',
       personality: '',
-      language: 'it'
+      language: 'it',
+      telegramToken: ''
     });
     setMessage('Bot created successfully');
     setTimeout(() => setMessage(''), 3000);
@@ -543,6 +663,15 @@ function App() {
 
       <Row className="main-content">
         <Col md={3} className="sidebar">
+          {/* Add New Bot button moved to top of sidebar */}
+          <Button 
+            variant="primary" 
+            className="w-100 add-bot-button"
+            onClick={() => setShowNewBotModal(true)}
+          >
+            {t.addNewBot}
+          </Button>
+          
           <Card>
             <Card.Header>{t.yourBots}</Card.Header>
             <ListGroup variant="flush">
@@ -558,15 +687,6 @@ function App() {
                 </ListGroup.Item>
               ))}
             </ListGroup>
-            <Card.Footer>
-              <Button 
-                variant="primary" 
-                className="w-100"
-                onClick={() => setShowNewBotModal(true)}
-              >
-                {t.addNewBot}
-              </Button>
-            </Card.Footer>
           </Card>
         </Col>
 
@@ -706,6 +826,16 @@ function App() {
                   </option>
                 ))}
               </Form.Select>
+            </Form.Group>
+            {/* Added Telegram Token field */}
+            <Form.Group className="mb-3">
+              <Form.Label>{t.telegramToken}</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder={t.enterTelegramToken}
+                value={newBot.telegramToken}
+                onChange={(e) => setNewBot({...newBot, telegramToken: e.target.value})}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
